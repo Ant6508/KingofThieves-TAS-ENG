@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kot-tas"
+version = "0.1.0"
+description = "TAS tool for King of Thieves"
+requires-python = ">=3.10"
+# Pinned: frida must be exactly the version of the frida-server pushed to
+# the device (controller/device.py, FRIDA_SERVER_VERSION).
+dependencies = [
+    "frida==17.18.0",
+    "frida-tools==14.10.4",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+# Without an explicit list, setuptools refuses to guess among agent,
+# controller, tests... and `pip install -e .` fails.
+[tool.setuptools]
+packages = ["controller"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
