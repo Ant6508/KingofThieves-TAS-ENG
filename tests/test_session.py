@@ -1,5 +1,6 @@
 import frida
 import pytest
+from kotnoyau.table import Table
 
 from controller import session as module_session
 from controller.device import DeviceError, GameNotRunning
@@ -223,10 +224,11 @@ def test_le_rattachement_ne_reessaie_pas_un_frida_discordant(monkeypatch):
 
 
 def test_check_version_garde_la_table(monkeypatch):
-    monkeypatch.setattr(module_session, "installed_version", lambda package: ("2.84", 4755781))
+    table = Table.derniere()  # la copie publiée n'embarque que la plus récente
+    monkeypatch.setattr(module_session, "installed_version", lambda package: (table.nom, table.code))
     s = Session()
     s.check_version()
-    assert s.table.adresse("vt_hero") == 0x1f466f0
+    assert s.table.adresse("vt_hero") == table.adresse("vt_hero")
 
 
 def test_check_version_refuse_une_version_sans_table(monkeypatch):
@@ -236,4 +238,4 @@ def test_check_version_refuse_une_version_sans_table(monkeypatch):
 
 
 def test_version_attendue_est_celle_de_la_table():
-    assert module_session.version_attendue() == ("2.84", 4755781)
+    assert module_session.version_attendue() == ("2.84.1", 4755794)

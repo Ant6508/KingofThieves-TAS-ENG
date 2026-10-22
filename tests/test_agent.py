@@ -98,5 +98,6 @@ def test_l_agent_lit_ses_adresses_dans_la_table():
 
     source = build_agent_source()
     assert noms_utilises(source) == ["base_element_get_pos", "vt_hero"]
-    assert charger_agent(source, Table.pour(4755781)).startswith(
-        "var ADR = {base_element_get_pos: 0x1d9d0f0, vt_hero: 0x1f466f0};")
+    table = Table.derniere()  # la copie publiée n'embarque que la plus récente
+    assert charger_agent(source, table).startswith("var ADR = {base_element_get_pos: %#x, vt_hero: %#x};" % (
+        table.adresse("base_element_get_pos"), table.adresse("vt_hero")))
