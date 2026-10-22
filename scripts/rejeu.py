@@ -2,7 +2,7 @@
 """rejeu.py - rejouer un film, et dire si le rejeu est conforme.
 
 Chaque essai part d'un jeu fraichement relance : c'est la seule condition de
-depart bit-exacte (NOTES.md, jalon 5, section 2). L'operateur renavigue ensuite
+depart bit-exacte (kot_headless/docs/savoir/jeu/horloge.md). L'operateur renavigue ensuite
 jusqu'a l'ecran de commencement et confirme d'une touche -- voir
 controller/depart.py pour ce qui a ete essaye avant, et pourquoi.
 
@@ -39,7 +39,7 @@ from controller.movie import (  # noqa: E402
 from controller.depart import DepartError, au_depart, lire_position  # noqa: E402
 from controller.relance import relancer  # noqa: E402
 from controller.run import Run, derouler  # noqa: E402
-from controller.session import EXPECTED_VERSION_CODE, Session  # noqa: E402
+from controller.session import Session, version_attendue  # noqa: E402
 from controller.trace import (  # noqa: E402
     decode,
     decrire_divergence,
@@ -196,7 +196,7 @@ def verdict(movie, runs):
 
 
 def main():
-    movie = load_movie(CHEMIN, expected_version_code=EXPECTED_VERSION_CODE)
+    movie = load_movie(CHEMIN, expected_version_code=version_attendue()[1])
     print(f"movie {CHEMIN}: {len(movie.inputs)} jump(s), "
           f"{movie.run_frames} frames, start expected at "
           f"({movie.start.hero_x}, {movie.start.hero_y})")

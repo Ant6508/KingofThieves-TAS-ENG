@@ -220,3 +220,20 @@ def test_le_rattachement_ne_reessaie_pas_un_frida_discordant(monkeypatch):
 
     assert essais == []
     assert "17.19.0" in str(excinfo.value)
+
+
+def test_check_version_garde_la_table(monkeypatch):
+    monkeypatch.setattr(module_session, "installed_version", lambda package: ("2.84", 4755781))
+    s = Session()
+    s.check_version()
+    assert s.table.adresse("vt_hero") == 0x1f466f0
+
+
+def test_check_version_refuse_une_version_sans_table(monkeypatch):
+    monkeypatch.setattr(module_session, "installed_version", lambda package: ("2.85", 4799999))
+    with pytest.raises(SessionError, match="4799999"):
+        Session().check_version()
+
+
+def test_version_attendue_est_celle_de_la_table():
+    assert module_session.version_attendue() == ("2.84", 4755781)

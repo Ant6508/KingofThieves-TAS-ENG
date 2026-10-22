@@ -43,7 +43,7 @@ from controller.frise import (  # noqa: E402
 from controller.movie import MovieError, load_movie  # noqa: E402
 from controller.pilote import Pilote  # noqa: E402
 from controller.run import LATENCE_TAP_IMAGES  # noqa: E402
-from controller.session import EXPECTED_VERSION_CODE, Session  # noqa: E402
+from controller.session import Session, version_attendue  # noqa: E402
 
 BADGES = {
     BROUILLON: ("DRAFT", "#d9a300", "#000000"),
@@ -533,7 +533,7 @@ class Fenetre:
             if not chemin:
                 return
         try:
-            movie = load_movie(chemin, EXPECTED_VERSION_CODE)
+            movie = load_movie(chemin, version_attendue()[1])
         except Exception as exc:  # noqa: BLE001 -- un JSON d'une autre forme
             # leve TypeError, KeyError... : tout refus finit dans le bandeau.
             self.message = f"open refused: {exc}"

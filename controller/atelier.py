@@ -31,7 +31,7 @@ from controller.movie import (
     save_movie,
 )
 from controller.run import LATENCE_TAP_IMAGES
-from controller.session import EXPECTED_VERSION_CODE, EXPECTED_VERSION_NAME
+from controller.session import version_attendue
 from controller.trace import Etat, empreinte, encode
 
 BROUILLON = "brouillon"
@@ -361,8 +361,7 @@ class Atelier:
                 f"jump at frame {hors_run[0]} beyond the run "
                 f"({run_frames} frames): the replay wouldn't fire it")
         movie = Movie(
-            game=GameBuild(PACKAGE, EXPECTED_VERSION_NAME,
-                           EXPECTED_VERSION_CODE),
+            game=GameBuild(PACKAGE, *version_attendue()),
             dt=DT,
             run_frames=run_frames,
             start=StartConditions(relaunch=True, tap_demarrage=True,
@@ -412,7 +411,7 @@ class Atelier:
         Seul le premier passage se compare au film : il part d'une relance,
         comme l'essai qui a produit l'empreinte. Les suivants partent de
         l'ecran d'apres-run, dont la camera est cadree 690 px plus loin
-        (NOTES.md, "Le rejeu sans relance est bit-exact").
+        (kot_headless/docs/savoir/jeu/horloge.md).
         """
         if not self.gele:
             raise AtelierError("only a frozen movie can be replayed")

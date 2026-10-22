@@ -14,14 +14,13 @@ KOT.symbols = (function () {
     swapBuffers: ['libEGL.so', 'eglSwapBuffers']
   };
 
-  // Offsets releves le 2026-09-17 sur King of Thieves 2.83, par watchpoint
-  // materiel. Voir NOTES.md, "Sonde d'etat du heros - TROUVEE".
-  // Reportes sur 2.84 (versionCode 4755781) le 2026-09-28 : voir NOTES.md,
-  // "Passage a 2.84".
-  // Tous relatifs a la base de libthieves.so : aucune adresse absolue.
+  // Adresses de la table du noyau (kot_headless/noyau/kotnoyau/tables/), prelude ADR
+  // ajoute par kotnoyau.frida_.charger_agent ; relevees le 2026-09-17 sur 2.83 par
+  // watchpoint materiel, reportees sur 2.84 le 2026-09-28 (kot_headless/docs/savoir/jeu/heros.md).
+  // Toutes relatives a la base de libthieves.so : aucune adresse absolue.
   var OFFSETS = {
-    heroVtable:     0x1f466f0,   // vtable de la classe du heros
-    positionGetter: 0x1d9d0f0    // BaseElement::getPos : movups xmm0, [rdi+0x34] ; ret
+    heroVtable:     ADR.vt_hero,               // vtable de la classe du heros
+    positionGetter: ADR.base_element_get_pos   // BaseElement::getPos : movups xmm0, [rdi+0x34] ; ret
   };
 
   // Offsets a l'interieur des objets, en octets.
@@ -88,9 +87,9 @@ KOT.symbols = (function () {
         FIELDS.vtableSlot.toString(16) +
         ' (expected +0x' + OFFSETS.positionGetter.toString(16) +
         ', found ' + (trouve === null ? 'unreadable' : trouve.toString()) + ').' +
-        ' The game was probably updated: the offsets above only hold' +
-        ' for 2.84. Run scripts/reverse/sonde.py again to find them,' +
-        ' then fix OFFSETS in agent/symbols.js and NOTES.md.'
+        ' The game was probably updated: the core address table no longer' +
+        ' holds for this library. Find vt_hero and base_element_get_pos again' +
+        ' (python -m kotnoyau.retrouver, scripts/reverse/sonde.py to check).'
       );
     }
   }

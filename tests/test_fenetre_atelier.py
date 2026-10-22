@@ -465,7 +465,7 @@ import time  # noqa: E402
 
 from controller.movie import load_movie  # noqa: E402
 from controller.pilote import Pilote  # noqa: E402
-from controller.session import EXPECTED_VERSION_CODE  # noqa: E402
+from controller.session import version_attendue  # noqa: E402
 from tests.test_pilote import FauxSession  # noqa: E402
 
 
@@ -528,7 +528,7 @@ def test_essayer_sauter_ici_puis_geler_sur_le_vrai_pilote(fenetre_reelle,
     f.atelier.geler(chemin, "win")
     f.rafraichir()
     assert f.badge.cget("text") == "❄ FROZEN"
-    movie = load_movie(chemin, EXPECTED_VERSION_CODE)
+    movie = load_movie(chemin, version_attendue()[1])
     assert movie.run_frames == 74
     assert [i.frame for i in movie.inputs] == [50, 64]
     assert all(i.frame < movie.run_frames for i in movie.inputs)

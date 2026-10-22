@@ -90,3 +90,13 @@ def test_la_phase_de_l_horloge_repart_avec_le_run():
 
     assert "cycleIndex" in source
     assert "frame % CYCLE_MS.length" not in source
+
+
+def test_l_agent_lit_ses_adresses_dans_la_table():
+    from kotnoyau.frida_ import charger_agent, noms_utilises
+    from kotnoyau.table import Table
+
+    source = build_agent_source()
+    assert noms_utilises(source) == ["base_element_get_pos", "vt_hero"]
+    assert charger_agent(source, Table.pour(4755781)).startswith(
+        "var ADR = {base_element_get_pos: 0x1d9d0f0, vt_hero: 0x1f466f0};")
