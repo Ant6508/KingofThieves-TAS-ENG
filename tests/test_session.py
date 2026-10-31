@@ -238,4 +238,4 @@ def test_check_version_refuse_une_version_sans_table(monkeypatch):
 
 
 def test_version_attendue_est_celle_de_la_table():
-    assert module_session.version_attendue() == ("2.84.1", 4755794)
+    assert module_session.version_attendue() == ("2.84.2", 4755816)

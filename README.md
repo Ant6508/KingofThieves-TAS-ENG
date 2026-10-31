@@ -44,16 +44,16 @@ tested on.
 **Check:** after the restart, MEmu's settings still show Root mode on and
 1600 × 900.
 
-### 2. King of Thieves 2.84.1
+### 2. King of Thieves 2.84.2
 
 1. In MEmu, open the **Play Store**, sign in with a Google account and install
    **King of Thieves**.
 2. Launch the game once, up to your base, so it finishes downloading its data.
 
 **Check:** in MEmu, Android *Settings* → *Apps* → *King of Thieves*: the
-version shown must be **2.84.1**.
+version shown must be **2.84.2**.
 
-The tool is tied to this exact version (versionCode 4755794): it reads the
+The tool is tied to this exact version (versionCode 4755816): it reads the
 game's memory at addresses recorded on 2.84. With any other version, it refuses
 to start rather than read garbage. If the Play Store installs a newer version,
 the tool won't work until those addresses have been updated (see
@@ -262,16 +262,16 @@ and replace the files, keeping your `films` folder. Either way, then run again:
 | `adb not found (...)` | MEmu isn't installed, or installed in a way the tool doesn't recognize | Install MEmu (step 1). Otherwise, add the folder containing `adb.exe` to the PATH (in MEmu's folder, `MEmu` subfolder) |
 | `no adb device connected: launch MEmu.` | MEmu is closed, or not started yet | Launch MEmu, wait for the home screen, try again |
 | `several adb devices connected (...)` | Several MEmu instances are open | Close the ones you don't use, or set `KOT_SERIAL` (see [Several MEmu instances](#several-memu-instances)) |
-| `unexpected game version: ...` | King of Thieves isn't on 2.84.1 | The tool only works with 2.84.1 (see [Limitations](#limitations)) |
+| `unexpected game version: ...` | King of Thieves isn't on 2.84.2 | The tool only works with 2.84.2 (see [Limitations](#limitations)) |
 | `com.zeptolab.thieves.google isn't running. Launch the game in MEmu.` | The game is closed | Launch King of Thieves in MEmu |
 | `frida-server 17.18.0 missing and could not be downloaded` | No internet, or GitHub unreachable | Check your connection and try again. Otherwise, follow the message's instructions: download the archive by hand, unpack it with 7-Zip, put the file where it says |
 | `attach failed after 15 tries`, with `frida-server` or `closed` in the last error | frida-server doesn't start: Root mode off, or an old frida-server of another version left in MEmu | Check Root mode (step 1). Otherwise, restart MEmu then, in a terminal, `& "C:\Program Files\Microvirt\MEmu\adb.exe" shell rm /data/local/tmp/frida-server` (adjust the path if MEmu is installed elsewhere): the tool will reinstall the right version |
-| `the agent refuses to start. Missing symbols or invalid offsets` | Right after a relaunch, that's normal: the tool retries on its own. If it persists, the game isn't exactly 2.84.1 | Check the game version (step 2) |
+| `the agent refuses to start. Missing symbols or invalid offsets` | Right after a relaunch, that's normal: the tool retries on its own. If it persists, the game isn't exactly 2.84.2 | Check the game version (step 2) |
 | The step 6 tests fail | Incomplete installation | Redo step 5, then step 6 |
 
 ## Limitations
 
-- **King of Thieves 2.84.1 only.** The tool reads the game's memory at addresses
+- **King of Thieves 2.84.2 only.** The tool reads the game's memory at addresses
   recorded on this version; with every game update, they have to be found
   again.
 - **MEmu on Windows only, at 1600 × 900.**
